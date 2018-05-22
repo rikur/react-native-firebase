@@ -444,9 +444,12 @@ class RNFirebaseAuth extends ReactContextBaseJavaModule {
       }
     };
 
-
-    ActionCodeSettings settings = buildActionCodeSettings(actionCodeSettings);
-    firebaseAuth.sendSignInLinkToEmail(email, settings).addOnCompleteListener(listener);
+    if (actionCodeSettings == null) {
+      firebaseAuth.sendSignInLinkToEmail(email).addOnCompleteListener(listener);
+    } else {
+      ActionCodeSettings settings = buildActionCodeSettings(actionCodeSettings);
+      firebaseAuth.sendSignInLinkToEmail(email, settings).addOnCompleteListener(listener);
+    }
   }
 
 
