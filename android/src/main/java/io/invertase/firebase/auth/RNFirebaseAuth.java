@@ -425,7 +425,7 @@ class RNFirebaseAuth extends ReactContextBaseJavaModule {
    * @param promise
    */
   @ReactMethod
-  public void sendSignInLinkToEmail(String appName, String email, ReadableMap actionCodeSettings, final Promise promise) {
+  public void sendSignInLinkToEmail(String appName, final String email, ReadableMap actionCodeSettings, final Promise promise) {
     Log.d(TAG, "sendSignInLinkToEmail");
     FirebaseApp firebaseApp = FirebaseApp.getInstance(appName);
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance(firebaseApp);
@@ -444,12 +444,8 @@ class RNFirebaseAuth extends ReactContextBaseJavaModule {
       }
     };
 
-    if (actionCodeSettings == null) {
-      firebaseAuth.sendSignInLinkToEmail(email).addOnCompleteListener(listener);
-    } else {
-      ActionCodeSettings settings = buildActionCodeSettings(actionCodeSettings);
-      firebaseAuth.sendSignInLinkToEmail(email, settings).addOnCompleteListener(listener);
-    }
+    ActionCodeSettings settings = buildActionCodeSettings(actionCodeSettings);
+    firebaseAuth.sendSignInLinkToEmail(email, settings).addOnCompleteListener(listener);
   }
 
 
